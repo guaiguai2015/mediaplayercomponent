@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -129,6 +130,17 @@ public class HomeFragment extends BaseFragment implements View.OnClickListener, 
 
             //这个方法是让listview进行滑动的过程中不进行加载图片
             mListView.setOnScrollListener(new PauseOnScrollListener(ImageLoader.getInstance(),true,true));
+
+            mListView.setOnScrollListener(new AbsListView.OnScrollListener() {
+                @Override
+                public void onScrollStateChanged(AbsListView view, int scrollState) {
+                }
+
+                @Override
+                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                    mAdapter.updateAdInScrollView();
+                }
+            });
         }else {
             showErrorView();
         }

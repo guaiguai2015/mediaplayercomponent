@@ -60,7 +60,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
     private AudioManager audioManager;   //音量控制器
     private Surface videoSurface;
 
-    /**
+    /**w
      * Data
      */
     private String mUrl;     //加载视频地址
@@ -72,8 +72,8 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
      * Status状态保护
      */
     private boolean canPlay = true;
-    private boolean mIsRealPause;
-    private boolean mIsComplete;
+    private boolean mIsRealPause;    //是不是手动进行暂停的
+    private boolean mIsComplete;     //是不是自己播放完成的吗
     private int mCurrentCount;
     private int playerState = STATE_IDLE;
 
@@ -175,7 +175,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
      * 设置播放器的声音 为静音
      * @param mute
      */
-    private void mute(boolean mute) {
+    public void mute(boolean mute) {
         isMute = mute;
         if(mediaPlayer != null && audioManager != null) {
             float volume = isMute ? 0.0f : 1.0f;
@@ -291,7 +291,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         mMiniPlayBtn.setVisibility(View.GONE);
 
         mLoadingBar.setVisibility(View.VISIBLE);
-        AnimationDrawable ad = (AnimationDrawable) mLoadingBar.getDrawable();
+        AnimationDrawable ad = (AnimationDrawable) mLoadingBar.getBackground();
         ad.start();
 
         loadFrameImage();
@@ -453,7 +453,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
     /**
      * 重新开始播放
      */
-    private void resume() {
+    public void resume() {
 
         if (playerState != STATE_PAUSING) {
             return;
@@ -488,11 +488,11 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         mFullBtn.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 
-    private void setIsComplete(boolean isRealComplete) {
+    public void setIsComplete(boolean isRealComplete) {
         this.mIsComplete = isRealComplete;
     }
 
-    private void setIsRealPause(boolean isRealPause) {
+    public void setIsRealPause(boolean isRealPause) {
         this.mIsRealPause = isRealPause;
     }
 
@@ -504,12 +504,16 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         return mIsComplete;
     }
 
+    public boolean isFrameHidden() {
+        return mFrameView.getVisibility() == View.VISIBLE ? false : true;
+    }
+
 
     /**
      * 判断当前mediaPlayer是否进行来播放
      * @return
      */
-    private boolean isPlaying() {
+    public boolean isPlaying() {
         if (mediaPlayer != null && mediaPlayer.isPlaying()) {
             return true;
         }
@@ -611,7 +615,9 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         showPauseView(false);
         setCurrentPlayState(STATE_PAUSING);
         if (isPlaying()) {
+            //这个跳转的完成是不定时的
             mediaPlayer.seekTo(position);
+            //跳转事件的监听  就是seekTo的监听
             mediaPlayer.setOnSeekCompleteListener(new MediaPlayer.OnSeekCompleteListener() {
                 @Override
                 public void onSeekComplete(MediaPlayer mp) {
@@ -736,6 +742,7 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
         this.mFrameLoadListener = frameLoadListener;
     }
     /**
+     * VideoPLayer的播放器的监听
      * 供slot层来实现具体点击逻辑,具体逻辑还会变，
      * 如果对UI的点击没有具体监测的话可以不回调
      */
@@ -759,7 +766,9 @@ public class CustomVideoView extends RelativeLayout implements View.OnClickListe
     }
 
 
-
+    /**
+     * 这个是一个加载过程中的等待页的监听器
+     */
     public interface ADFrameImageLoadListener {
 
         void onStartFrameLoad(String url, ImageLoaderListener listener);

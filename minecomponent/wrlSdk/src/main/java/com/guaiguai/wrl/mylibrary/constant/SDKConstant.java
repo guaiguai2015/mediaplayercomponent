@@ -6,6 +6,8 @@ package com.guaiguai.wrl.mylibrary.constant;
 
 public class SDKConstant {
 
+    //毫秒单位
+    public static int MILLION_UNIT = 1000;
 
     //自动播放阈值
     public static int VIDEO_SCREEN_PERCENT = 50;
