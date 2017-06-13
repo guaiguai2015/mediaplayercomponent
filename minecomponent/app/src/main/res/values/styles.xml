@@ -8,4 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <!--没有标题栏-->
+    <style name="notitle" parent="Theme.AppCompat.NoActionBar">
+
+    </style>
+
+    <!--没有标题栏和状态栏，全屏-->
+    <style name="notitle_fullscreen" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+
 </resources>

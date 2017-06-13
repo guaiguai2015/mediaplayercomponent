@@ -60,6 +60,7 @@ public class CommonRequest {
 
 
     /**
+     * 创建监测的请求参数
      * @param url
      * @param params
      * @return

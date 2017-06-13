@@ -131,6 +131,9 @@ public class VideoFullDialog extends Dialog implements CustomVideoView.ADVideoPl
         isFirst = false;
     }
 
+    /**
+     * 窗口消失的时候调用的方法
+     */
     @Override
     public void dismiss() {
         mParentView.removeView(mVideoView);
