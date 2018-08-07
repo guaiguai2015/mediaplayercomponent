@@ -13,4 +13,6 @@ public class Constant {
     public static final int HARDWEAR_CAMERA_CODE = 0x02;
     //检查系统的相机的权限
     public static final String[] HARDWEAR_CAMERA_PERMISSION = new String []{Manifest.permission.CAMERA};
+
+    public static final String  LOAD_DATA = "load_data";
 }
