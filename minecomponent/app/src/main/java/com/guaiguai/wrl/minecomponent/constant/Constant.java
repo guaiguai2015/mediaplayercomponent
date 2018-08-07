@@ -15,4 +15,6 @@ public class Constant {
     public static final String[] HARDWEAR_CAMERA_PERMISSION = new String []{Manifest.permission.CAMERA};
 
     public static final String  LOAD_DATA = "load_data";
+
+    public static final String SUCCEDDD = "succeddd";
 }
